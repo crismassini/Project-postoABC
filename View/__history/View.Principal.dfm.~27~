@@ -13,8 +13,11 @@ object ViewPrincipal: TViewPrincipal
   Font.Style = []
   Menu = MainMenu1
   Position = poDesktopCenter
+  ShowHint = True
   WindowState = wsMaximized
+  OnClose = FormClose
   OnCreate = FormCreate
+  OnShow = FormShow
   PixelsPerInch = 96
   TextHeight = 15
   object Image1: TImage
@@ -575,42 +578,56 @@ object ViewPrincipal: TViewPrincipal
       Caption = 'Arquivo'
       object CadastrodeBombas1: TMenuItem
         Action = actCadBombas
+        Hint = 'Cadastrar bombas do posto'
       end
       object N1: TMenuItem
         Caption = '-'
       end
       object CadastrodeProduto1: TMenuItem
         Action = actCadProdutos
+        Hint = 'Cadastrar Produtos'
       end
       object N2: TMenuItem
         Caption = '-'
       end
       object Sair1: TMenuItem
         Caption = 'Sair'
+        Hint = 'Sair do Sistema'
       end
     end
-    object Aes1: TMenuItem
+    object Acoes1: TMenuItem
       Caption = 'A'#231#245'es'
       object SimuladordeVendas1: TMenuItem
-        Caption = 'Simulador de Vendas'
+        Action = actSimuladorVendas
+        Hint = 'Iniciar ou encerrar o SImulador de Vendas'
+      end
+      object N4: TMenuItem
+        Caption = '-'
+      end
+      object VendasOnline1: TMenuItem
+        Action = actVendasOnLine
+        Hint = 'Acompanhar Vendas On-line'
       end
     end
     object Relatrios1: TMenuItem
       Caption = 'Relat'#243'rios'
       object Vendas1: TMenuItem
         Action = actRelVendas
+        Hint = 'Relat'#243'rio de vendas'
       end
     end
     object Configuraes1: TMenuItem
       Caption = 'Configura'#231#245'es'
       object CadastrodeUsuarios1: TMenuItem
         Action = actCadUsuario
+        Hint = 'Cadastrar Usuario do Sistema'
       end
       object N3: TMenuItem
         Caption = '-'
       end
       object Sobre1: TMenuItem
         Action = actSobre
+        Hint = 'Sobre o Dev...'
       end
     end
   end
@@ -639,6 +656,7 @@ object ViewPrincipal: TViewPrincipal
     object actSimuladorVendas: TAction
       Category = 'Acoes'
       Caption = 'Simulador de Vendas'
+      OnExecute = actSimuladorVendasExecute
     end
     object actRelVendas: TAction
       Category = 'Relatorios'
@@ -649,6 +667,11 @@ object ViewPrincipal: TViewPrincipal
       Category = 'Configura'#231'oes'
       Caption = 'Sobre'
       OnExecute = actSobreExecute
+    end
+    object actVendasOnLine: TAction
+      Category = 'Acoes'
+      Caption = 'Vendas On-line'
+      OnExecute = actVendasOnLineExecute
     end
   end
 end

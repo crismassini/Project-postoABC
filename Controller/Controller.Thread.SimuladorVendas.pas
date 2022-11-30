@@ -36,17 +36,18 @@ end;
 
 destructor TSimuladorVendas.Destroy;
 begin
-  MontaVenda.Free;
+  FreeAndNil(MontaVenda);
   inherited;
 end;
 
 procedure TSimuladorVendas.Execute;
 begin
   inherited;
-  repeat
+  while not Terminated do
+  begin
     SimulaVenda;
     Sleep(_TEMPOEXECUCAO);
-  until 1 = 2;
+  end;
 end;
 
 function TSimuladorVendas.SimuladorVendasAtivo: Boolean;

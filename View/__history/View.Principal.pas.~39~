@@ -35,6 +35,9 @@ type
     actSimuladorVendas: TAction;
     actRelVendas: TAction;
     actSobre: TAction;
+    N4: TMenuItem;
+    VendasOnline1: TMenuItem;
+    actVendasOnLine: TAction;
     procedure FormCreate(Sender: TObject);
     procedure TimerTimer(Sender: TObject);
     procedure actCadUsuarioExecute(Sender: TObject);
@@ -44,6 +47,8 @@ type
     procedure actRelVendasExecute(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure actSimuladorVendasExecute(Sender: TObject);
+    procedure actVendasOnLineExecute(Sender: TObject);
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
   private
     { Private declarations }
     SimuladorVendas: TSimuladorVendas;
@@ -60,9 +65,20 @@ implementation
 
 uses
   uUtil, View.CadUsuario, View.CadBombas, View.CadProdutos, View.Sobre, View.RelVendas,
-  Controller.DtmConexao;
+  Controller.DtmConexao, View.VendasOnline;
 
 {$R *.dfm}
+
+procedure TViewPrincipal.FormClose(Sender: TObject; var Action: TCloseAction);
+begin
+  if SimuladorVendas.SimuladorVendasAtivo then
+  begin
+    SimuladorVendas.Terminate;
+    SimuladorVendas.WaitFor;
+    SimuladorVendas.Free;
+  end;
+
+end;
 
 procedure TViewPrincipal.FormCreate(Sender: TObject);
 begin
@@ -79,13 +95,15 @@ begin
   if SimuladorVendas = nil then
   begin
     SimuladorVendas := TSimuladorVendas.Create(ControllerDtmConexao.FDConnection);
-    SimuladorVendas.Execute;
-  end;
+    SimuladorVendas.Start;
+  end
+  else
+    SimuladorVendas.Resume;
 end;
 
 function TViewPrincipal.SimuladorVendasLigado: Boolean;
 begin
-  Result := SimuladorVendas = nil;
+  Result := SimuladorVendas.SimuladorVendasAtivo;
 end;
 
 procedure TViewPrincipal.TimerTimer(Sender: TObject);
@@ -150,12 +168,14 @@ procedure TViewPrincipal.actSimuladorVendasExecute(Sender: TObject);
 begin
   if SimuladorVendasLigado then
   begin
-    if MessageDlg('Deseja ENCERRAR o simulador de vendas?', mtConfirmation,[mbyes,mbno],0) = mrYes then
-      FreeAndNil(SimuladorVendas);
+    if MessageDlg('Deseja ENCERRAR o Simulador de Vendas?', mtConfirmation,[mbyes,mbno],0) = mrYes then
+    begin
+       SimuladorVendas.Terminate;
+    end;
   end
   else
   begin
-    if MessageDlg('Deseja INICIAR o simulador de vendas?', mtConfirmation,[mbyes,mbno],0) = mrYes then
+    if MessageDlg('Deseja INICIAR o Simulador de Vendas?', mtConfirmation,[mbyes,mbno],0) = mrYes then
       IniciaSimuladorVendas;
   end;
 end;
@@ -172,5 +192,19 @@ begin
     end;
   end;
 end;
+procedure TViewPrincipal.actVendasOnLineExecute(Sender: TObject);
+begin
+  if ViewVendasOnline = nil then
+  begin
+    Application.CreateForm(TViewVendasOnline, ViewVendasOnline);
+    try
+      ViewVendasOnline.SimuladorVendasLigado := SimuladorVendasLigado;
+      ViewVendasOnline.ShowModal;
+    finally
+      FreeAndNil(ViewVendasOnline);
+    end;
+  end;
+end;
+
 {$ENDREGION}
 end.

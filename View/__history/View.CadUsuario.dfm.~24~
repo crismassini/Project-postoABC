@@ -1,32 +1,32 @@
 inherited ViewCadUsuario: TViewCadUsuario
   Caption = 'ViewCadUsuario'
-  ClientHeight = 496
+  ClientHeight = 562
   ClientWidth = 366
-  Position = poDesktopCenter
-  Visible = False
+  OnClose = FormClose
   OnCreate = FormCreate
-  OnDestroy = FormDestroy
   OnShow = FormShow
-  ExplicitLeft = 3
-  ExplicitTop = 3
   ExplicitWidth = 384
-  ExplicitHeight = 543
+  ExplicitHeight = 609
   PixelsPerInch = 96
   TextHeight = 15
   inherited Panel1: TPanel
     Width = 366
     Caption = 'Cadastro de Usu'#225'rios'
+    ExplicitWidth = 366
   end
   inherited StatusBar1: TStatusBar
-    Top = 477
+    Top = 543
     Width = 366
-    ExplicitTop = 341
+    ExplicitTop = 543
+    ExplicitWidth = 366
   end
   inherited DBNavigator1: TDBNavigator
     Top = 425
     Width = 366
+    Enabled = False
     Hints.Strings = ()
-    ExplicitTop = 292
+    ExplicitTop = 425
+    ExplicitWidth = 366
   end
   object Panel2: TPanel [3]
     Left = 0
@@ -35,7 +35,6 @@ inherited ViewCadUsuario: TViewCadUsuario
     Height = 224
     Align = alTop
     TabOrder = 3
-    ExplicitWidth = 821
     object Label1: TLabel
       Left = 16
       Top = 22
@@ -111,7 +110,6 @@ inherited ViewCadUsuario: TViewCadUsuario
     Align = alTop
     Caption = 'pnlPesquisa'
     TabOrder = 4
-    ExplicitWidth = 821
     object dbgPesquisa: TDBGrid
       Left = 1
       Top = -4
@@ -124,6 +122,7 @@ inherited ViewCadUsuario: TViewCadUsuario
       Font.Height = -12
       Font.Name = 'Segoe UI'
       Font.Style = []
+      Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgConfirmDelete, dgCancelOnExit, dgTitleClick, dgTitleHotTrack]
       ParentFont = False
       TabOrder = 0
       TitleFont.Charset = DEFAULT_CHARSET
@@ -131,6 +130,7 @@ inherited ViewCadUsuario: TViewCadUsuario
       TitleFont.Height = -12
       TitleFont.Name = 'Segoe UI'
       TitleFont.Style = [fsBold]
+      OnDblClick = dbgPesquisaDblClick
       Columns = <
         item
           Expanded = False
@@ -146,6 +146,49 @@ inherited ViewCadUsuario: TViewCadUsuario
           Visible = True
         end>
     end
+  end
+  object btnNovo: TButton [5]
+    Left = 34
+    Top = 488
+    Width = 75
+    Height = 25
+    Caption = 'Novo'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -12
+    Font.Name = 'Segoe UI'
+    Font.Style = [fsBold]
+    ParentFont = False
+    TabOrder = 5
+  end
+  object btnEditar: TButton [6]
+    Left = 115
+    Top = 488
+    Width = 75
+    Height = 25
+    Caption = 'Editar'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -12
+    Font.Name = 'Segoe UI'
+    Font.Style = [fsBold]
+    ParentFont = False
+    TabOrder = 6
+  end
+  object btnExcluir: TButton [7]
+    Left = 196
+    Top = 488
+    Width = 75
+    Height = 25
+    Caption = 'Excluir'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -12
+    Font.Name = 'Segoe UI'
+    Font.Style = [fsBold]
+    ParentFont = False
+    TabOrder = 7
+    OnClick = btnExcluirClick
   end
   inherited dtsCadastro: TDataSource
     Left = 40

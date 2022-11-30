@@ -16,8 +16,10 @@ type
     FTOTALVENDA: Double;
     FPERCENTUALIMPOSTO: Double;
     FID_VENDA: Integer;
-  published
+    Contador: Integer;
+  public
     procedure CriaVenda;
+    constructor Create;
     property ID_VENDA: Integer read FID_VENDA write FID_VENDA;
     property ID_BOMBA: Integer read FID_BOMBA write FID_BOMBA;
     property QTD: Double read FQTD write FQTD;
@@ -35,38 +37,43 @@ uses
 
 { TInsertVenda }
 
+constructor TMontaVenda.Create;
+begin
+  Contador := 0;
+end;
+
 procedure TMontaVenda.CriaVenda;
 begin
+  inc(Contador);
   FID_VENDA := ProxCod('VENDAS', 'ID_VENDA');
+  FID_BOMBA := 1;
 
   case StrToInt(Copy(IntToStr(MinuteOf(Now)), 1, 1)) of //com base no primeiro digito do minuto atual, atribue a bomba de conbustivel
     1: FID_BOMBA := 1;
     2: FID_BOMBA := 2;
     3: FID_BOMBA := 3;
     4: FID_BOMBA := 4;
-  end
-  else
-    FID_BOMBA := 1;
+  end;
 
   case FID_BOMBA of
     1:  //Bomba que venda Gasolina
     begin
-      FQTD := (FID_BOMBA + HourOf(Now)) * 10 ;
+      FQTD := ((FID_BOMBA + Contador) * 1) + MinuteOf(now) + SecondOf(Now) ;
       FPRECOVENDA := 4;
     end;
     2:  //Bomba que venda Gasolina
     begin
-      FQTD := (FID_BOMBA + HourOf(Now)) * 20 ;
+      FQTD := ((FID_BOMBA + Contador) * 2) + MinuteOf(now) + SecondOf(Now) ;
       FPRECOVENDA := 4;
     end;
     3:  //Bomba que venda Óleo Diesel
     begin
-      FQTD := (FID_BOMBA + HourOf(Now)) * 30 ;
+      FQTD := ((FID_BOMBA + Contador) * 3) + MinuteOf(now) + SecondOf(Now) ;
       FPRECOVENDA := 3;
     end;
     4:  //Bomba que venda Óleo Diesel
     begin
-      FQTD := (FID_BOMBA + HourOf(Now)) * 40 ;
+      FQTD := ((FID_BOMBA + Contador) * 4) + MinuteOf(now) + SecondOf(Now);
       FPRECOVENDA := 3;
     end;
   end;

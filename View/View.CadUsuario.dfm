@@ -1,12 +1,14 @@
 inherited ViewCadUsuario: TViewCadUsuario
   Caption = 'ViewCadUsuario'
-  ClientHeight = 562
+  ClientHeight = 498
   ClientWidth = 366
   OnClose = FormClose
   OnCreate = FormCreate
   OnShow = FormShow
+  ExplicitLeft = 3
+  ExplicitTop = 3
   ExplicitWidth = 384
-  ExplicitHeight = 609
+  ExplicitHeight = 545
   PixelsPerInch = 96
   TextHeight = 15
   inherited Panel1: TPanel
@@ -15,7 +17,7 @@ inherited ViewCadUsuario: TViewCadUsuario
     ExplicitWidth = 366
   end
   inherited StatusBar1: TStatusBar
-    Top = 543
+    Top = 479
     Width = 366
     ExplicitTop = 543
     ExplicitWidth = 366
@@ -23,7 +25,6 @@ inherited ViewCadUsuario: TViewCadUsuario
   inherited DBNavigator1: TDBNavigator
     Top = 425
     Width = 366
-    Enabled = False
     Hints.Strings = ()
     ExplicitTop = 425
     ExplicitWidth = 366
@@ -146,49 +147,6 @@ inherited ViewCadUsuario: TViewCadUsuario
           Visible = True
         end>
     end
-  end
-  object btnNovo: TButton [5]
-    Left = 34
-    Top = 488
-    Width = 75
-    Height = 25
-    Caption = 'Novo'
-    Font.Charset = DEFAULT_CHARSET
-    Font.Color = clWindowText
-    Font.Height = -12
-    Font.Name = 'Segoe UI'
-    Font.Style = [fsBold]
-    ParentFont = False
-    TabOrder = 5
-  end
-  object btnEditar: TButton [6]
-    Left = 115
-    Top = 488
-    Width = 75
-    Height = 25
-    Caption = 'Editar'
-    Font.Charset = DEFAULT_CHARSET
-    Font.Color = clWindowText
-    Font.Height = -12
-    Font.Name = 'Segoe UI'
-    Font.Style = [fsBold]
-    ParentFont = False
-    TabOrder = 6
-  end
-  object btnExcluir: TButton [7]
-    Left = 196
-    Top = 488
-    Width = 75
-    Height = 25
-    Caption = 'Excluir'
-    Font.Charset = DEFAULT_CHARSET
-    Font.Color = clWindowText
-    Font.Height = -12
-    Font.Name = 'Segoe UI'
-    Font.Style = [fsBold]
-    ParentFont = False
-    TabOrder = 7
-    OnClick = btnExcluirClick
   end
   inherited dtsCadastro: TDataSource
     Left = 40

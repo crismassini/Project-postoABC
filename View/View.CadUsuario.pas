@@ -18,9 +18,6 @@ type
     dbgPesquisa: TDBGrid;
     Panel2: TPanel;
     pnlPesquisa: TPanel;
-    btnNovo: TButton;
-    btnEditar: TButton;
-    btnExcluir: TButton;
     procedure FormCreate(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure dbgPesquisaDblClick(Sender: TObject);

@@ -13,7 +13,9 @@ object ViewPrincipal: TViewPrincipal
   Font.Style = []
   Menu = MainMenu1
   Position = poDesktopCenter
+  ShowHint = True
   WindowState = wsMaximized
+  OnClose = FormClose
   OnCreate = FormCreate
   OnShow = FormShow
   PixelsPerInch = 96
@@ -576,6 +578,7 @@ object ViewPrincipal: TViewPrincipal
       Caption = 'Arquivo'
       object CadastrodeBombas1: TMenuItem
         Action = actCadBombas
+        Hint = 'Cadastrar bombas do posto'
       end
       object N1: TMenuItem
         Caption = '-'
@@ -588,12 +591,14 @@ object ViewPrincipal: TViewPrincipal
       end
       object Sair1: TMenuItem
         Caption = 'Sair'
+        Hint = 'Sair do Sistema'
       end
     end
     object Acoes1: TMenuItem
       Caption = 'A'#231#245'es'
       object SimuladordeVendas1: TMenuItem
         Action = actSimuladorVendas
+        Hint = 'Iniciar ou encerrar o SImulador de Vendas'
       end
       object N4: TMenuItem
         Caption = '-'
@@ -606,12 +611,14 @@ object ViewPrincipal: TViewPrincipal
       Caption = 'Relat'#243'rios'
       object Vendas1: TMenuItem
         Action = actRelVendas
+        Hint = 'Relat'#243'rio de vendas'
       end
     end
     object Configuraes1: TMenuItem
       Caption = 'Configura'#231#245'es'
       object CadastrodeUsuarios1: TMenuItem
         Action = actCadUsuario
+        Hint = 'Cadastrar Usuario do Sistema'
       end
       object N3: TMenuItem
         Caption = '-'
@@ -631,36 +638,43 @@ object ViewPrincipal: TViewPrincipal
     object actCadUsuario: TAction
       Category = 'Cadastros'
       Caption = 'Cadastro de Usu'#225'rios'
+      Hint = 'Cadastrar usu'#225'rio do sistema'
       OnExecute = actCadUsuarioExecute
     end
     object actCadBombas: TAction
       Category = 'Cadastros'
       Caption = 'Cadastro de Bombas'
+      Hint = 'Cadastrar Bombas de Combust'#237'vel'
       OnExecute = actCadBombasExecute
     end
     object actCadProdutos: TAction
       Category = 'Cadastros'
       Caption = 'Cadastro de Produtos'
+      Hint = 'Cadastrar Produtos'
       OnExecute = actCadProdutosExecute
     end
     object actSimuladorVendas: TAction
       Category = 'Acoes'
       Caption = 'Simulador de Vendas'
+      Hint = 'Iniciar ou Encerrar o Simulador de Vendas'
       OnExecute = actSimuladorVendasExecute
     end
     object actRelVendas: TAction
       Category = 'Relatorios'
       Caption = 'Relat'#243'rio de Vendas'
+      Hint = 'Relat'#243'rio de Vendas'
       OnExecute = actRelVendasExecute
     end
     object actSobre: TAction
       Category = 'Configura'#231'oes'
       Caption = 'Sobre'
+      Hint = 'Sobre o Dev...'
       OnExecute = actSobreExecute
     end
     object actVendasOnLine: TAction
       Category = 'Acoes'
       Caption = 'Vendas On-line'
+      Hint = 'Acompanhar Vendas On-line'
       OnExecute = actVendasOnLineExecute
     end
   end

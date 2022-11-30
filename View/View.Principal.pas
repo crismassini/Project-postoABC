@@ -48,6 +48,7 @@ type
     procedure FormShow(Sender: TObject);
     procedure actSimuladorVendasExecute(Sender: TObject);
     procedure actVendasOnLineExecute(Sender: TObject);
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
   private
     { Private declarations }
     SimuladorVendas: TSimuladorVendas;
@@ -68,9 +69,21 @@ uses
 
 {$R *.dfm}
 
+procedure TViewPrincipal.FormClose(Sender: TObject; var Action: TCloseAction);
+begin
+  if SimuladorVendas.SimuladorVendasAtivo then
+  begin
+    SimuladorVendas.Terminate;
+//    SimuladorVendas.WaitFor;
+//    SimuladorVendas.Free;
+  end;
+
+end;
+
 procedure TViewPrincipal.FormCreate(Sender: TObject);
 begin
   ViewPrincipal.Caption := ViewPrincipal.Caption + ' | Versão: ' + VersaoExe;
+  Application.ShowHint := True;
 end;
 
 procedure TViewPrincipal.FormShow(Sender: TObject);
