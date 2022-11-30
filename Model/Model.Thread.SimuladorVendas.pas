@@ -18,8 +18,6 @@ type
     FID_VENDA: Integer;
   published
     procedure CriaVenda;
-    constructor Create;
-    destructor Destroy; override;
     property ID_VENDA: Integer read FID_VENDA write FID_VENDA;
     property ID_BOMBA: Integer read FID_BOMBA write FID_BOMBA;
     property QTD: Double read FQTD write FQTD;
@@ -36,11 +34,6 @@ uses
   uUtil;
 
 { TInsertVenda }
-
-constructor TMontaVenda.Create;
-begin
-  CriaVenda;
-end;
 
 procedure TMontaVenda.CriaVenda;
 begin
@@ -81,11 +74,6 @@ begin
   FTOTALVENDA := (FQTD * FPRECOVENDA) + ((FQTD * FPRECOVENDA)  * FPERCENTUALIMPOSTO);
   FDATAVENDA := Now;
   FHORAVENDA := Now;
-end;
-
-destructor TMontaVenda.Destroy;
-begin
-  inherited;
 end;
 
 end.

@@ -10,14 +10,17 @@ type
   TSimuladorVendas = class(TThread)
   private
     FConexao: TFDConnection;
-    MontaVenda: TMontaVenda;
     procedure SimulaVenda;
   protected
   public
+    MontaVenda: TMontaVenda;
     procedure Execute; override;
     constructor Create(AConexao: TFDConnection);
     destructor Destroy; override;
 end;
+
+const
+  _TEMPOEXECUCAO = 10000;
 
 implementation
 
@@ -37,19 +40,22 @@ begin
 end;
 
 procedure TSimuladorVendas.Execute;
+var
+  i: Integer;
 begin
   inherited;
-  //fazer loop por tempo para inserção
-  while EhNumeroPrimo(MinuteOf(Now)) do
-  begin
+  i := 0;
+  repeat
     SimulaVenda;
-  end;
+    Sleep(_TEMPOEXECUCAO);
+  until 1 = 2;
 end;
 
 procedure TSimuladorVendas.SimulaVenda;
 var
   QrySimulaVenda: TFDQUery;
 begin
+  MontaVenda.CriaVenda;
   QrySimulaVenda := TFDQuery.Create(nil);
   QrySimulaVenda.Connection := FConexao;
   try
@@ -72,16 +78,17 @@ begin
     QrySimulaVenda.SQL.Add('  :pPERCENTUALIMPOSTO, ');
     QrySimulaVenda.SQL.Add('  :pTOTALVENDA, ');
     QrySimulaVenda.SQL.Add('  :pDATAVENDA, ');
-    QrySimulaVenda.SQL.Add('  :pHORAVENDA, ');
+    QrySimulaVenda.SQL.Add('  :pHORAVENDA) ');
 
     QrySimulaVenda.ParamByName('pID_VENDA').AsInteger := MontaVenda.ID_VENDA;
     QrySimulaVenda.ParamByName('pID_BOMBA').AsInteger := MontaVenda.ID_BOMBA;
     QrySimulaVenda.ParamByName('pQTD').AsFloat := MontaVenda.QTD;
     QrySimulaVenda.ParamByName('pPRECOVENDA').AsFloat := MontaVenda.PRECOVENDA;
-    QrySimulaVenda.ParamByName('pPERCENTUALIMPOSTO').AsFloat := MontaVenda.PERCENTUALIMPOSTO;
+    QrySimulaVenda.ParamByName('pPERCENTUALIMPOSTO').AsFloat := (MontaVenda.PERCENTUALIMPOSTO * 100);
     QrySimulaVenda.ParamByName('pTOTALVENDA').AsFloat := MontaVenda.TOTALVENDA;
     QrySimulaVenda.ParamByName('pDATAVENDA').AsDateTime := MontaVenda.DATAVENDA;
     QrySimulaVenda.ParamByName('pHORAVENDA').AsDateTime := MontaVenda.HORAVENDA;
+    QrySimulaVenda.Sql.SaveToFile(DiretorioPadraoLogs + 'QrySimulaVenda.sql');
     {$ENDREGION}
     QrySimulaVenda.ExecSQL;
   finally
