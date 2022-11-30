@@ -7,7 +7,7 @@ Projeto Fortes - Gerenciamento de Posto de Combustivel
 
 * Dentro desta mesma pasta existe um banco de dados  **Database\RETAG_BASE.FDB**, porem esta BD foi criado na seguinte versão do **Firebird: 3.0.9.33560 (Win32)**
 
-* Desenvolvido na **RAD Studio 11.0 Alexandria**
+* Desenvolvido com **Embarcadero Delphi 11.0 Alexandria** - SEM FINS LUCRATIVOS!
 
 # O Sistema
 
