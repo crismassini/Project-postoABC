@@ -1,195 +1,52 @@
 object ViewVendasOnLine: TViewVendasOnLine
   Left = 0
   Top = 0
-  Caption = 'ViewVendasOnLine'
-  ClientHeight = 346
-  ClientWidth = 615
+  BorderIcons = [biSystemMenu]
+  Caption = 'Vendas On-Line'
+  ClientHeight = 636
+  ClientWidth = 764
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
   Font.Height = -12
   Font.Name = 'Segoe UI'
   Font.Style = []
+  Position = poMainFormCenter
   OnCreate = FormCreate
   OnShow = FormShow
   PixelsPerInch = 96
   TextHeight = 15
-  object Panel1: TPanel
-    Left = 0
-    Top = 73
-    Width = 615
-    Height = 254
-    Align = alClient
-    TabOrder = 0
-    Visible = False
-    ExplicitTop = 0
-    ExplicitWidth = 577
-    ExplicitHeight = 577
-    object dbgVendas: TDBGrid
-      Left = 1
-      Top = 14
-      Width = 613
-      Height = 239
-      Align = alBottom
-      DataSource = dtsVendas
-      TabOrder = 0
-      TitleFont.Charset = DEFAULT_CHARSET
-      TitleFont.Color = clWindowText
-      TitleFont.Height = -12
-      TitleFont.Name = 'Segoe UI'
-      TitleFont.Style = []
-      Columns = <
-        item
-          Expanded = False
-          FieldName = 'ID_VENDA'
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clWindowText
-          Font.Height = -12
-          Font.Name = 'Segoe UI'
-          Font.Style = []
-          Title.Caption = 'Id Venda'
-          Title.Font.Charset = DEFAULT_CHARSET
-          Title.Font.Color = clWindowText
-          Title.Font.Height = -12
-          Title.Font.Name = 'Segoe UI'
-          Title.Font.Style = [fsBold]
-          Visible = True
-        end
-        item
-          Expanded = False
-          FieldName = 'ID_BOMBA'
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clWindowText
-          Font.Height = -12
-          Font.Name = 'Segoe UI'
-          Font.Style = []
-          Title.Caption = 'Id Bomba'
-          Title.Font.Charset = DEFAULT_CHARSET
-          Title.Font.Color = clWindowText
-          Title.Font.Height = -12
-          Title.Font.Name = 'Segoe UI'
-          Title.Font.Style = [fsBold]
-          Visible = True
-        end
-        item
-          Expanded = False
-          FieldName = 'QTD'
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clWindowText
-          Font.Height = -12
-          Font.Name = 'Segoe UI'
-          Font.Style = []
-          Title.Caption = 'Quantidade'
-          Title.Font.Charset = DEFAULT_CHARSET
-          Title.Font.Color = clWindowText
-          Title.Font.Height = -12
-          Title.Font.Name = 'Segoe UI'
-          Title.Font.Style = [fsBold]
-          Width = 78
-          Visible = True
-        end
-        item
-          Expanded = False
-          FieldName = 'PRECOVENDA'
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clWindowText
-          Font.Height = -12
-          Font.Name = 'Segoe UI'
-          Font.Style = []
-          Title.Caption = 'R$ Venda'
-          Title.Font.Charset = DEFAULT_CHARSET
-          Title.Font.Color = clWindowText
-          Title.Font.Height = -12
-          Title.Font.Name = 'Segoe UI'
-          Title.Font.Style = [fsBold]
-          Visible = True
-        end
-        item
-          Expanded = False
-          FieldName = 'PERCENTUALIMPOSTO'
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clWindowText
-          Font.Height = -12
-          Font.Name = 'Segoe UI'
-          Font.Style = []
-          Title.Caption = '% Imposto'
-          Title.Font.Charset = DEFAULT_CHARSET
-          Title.Font.Color = clWindowText
-          Title.Font.Height = -12
-          Title.Font.Name = 'Segoe UI'
-          Title.Font.Style = [fsBold]
-          Visible = True
-        end
-        item
-          Expanded = False
-          FieldName = 'TOTALVENDA'
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clWindowText
-          Font.Height = -12
-          Font.Name = 'Segoe UI'
-          Font.Style = []
-          Title.Caption = 'R$ Total Venda'
-          Title.Font.Charset = DEFAULT_CHARSET
-          Title.Font.Color = clWindowText
-          Title.Font.Height = -12
-          Title.Font.Name = 'Segoe UI'
-          Title.Font.Style = [fsBold]
-          Width = 88
-          Visible = True
-        end
-        item
-          Expanded = False
-          FieldName = 'DATAVENDA'
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clWindowText
-          Font.Height = -12
-          Font.Name = 'Segoe UI'
-          Font.Style = []
-          Title.Caption = 'Data Venda'
-          Title.Font.Charset = DEFAULT_CHARSET
-          Title.Font.Color = clWindowText
-          Title.Font.Height = -12
-          Title.Font.Name = 'Segoe UI'
-          Title.Font.Style = [fsBold]
-          Width = 71
-          Visible = True
-        end
-        item
-          Expanded = False
-          FieldName = 'HORAVENDA'
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clWindowText
-          Font.Height = -12
-          Font.Name = 'Segoe UI'
-          Font.Style = []
-          Title.Caption = 'Hora Venda'
-          Title.Font.Charset = DEFAULT_CHARSET
-          Title.Font.Color = clWindowText
-          Title.Font.Height = -12
-          Title.Font.Name = 'Segoe UI'
-          Title.Font.Style = [fsBold]
-          Width = 79
-          Visible = True
-        end>
-    end
+  object lblTotalVendas: TLabel
+    Left = 618
+    Top = 599
+    Width = 92
+    Height = 15
+    Caption = 'Total de Vendas: '
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -12
+    Font.Name = 'Segoe UI'
+    Font.Style = [fsBold]
+    ParentFont = False
   end
   object StatusBar1: TStatusBar
     Left = 0
-    Top = 327
-    Width = 615
+    Top = 617
+    Width = 764
     Height = 19
     Panels = <
       item
         Text = 'Simulador de Vendas Ligado'
         Width = 50
       end>
-    ExplicitTop = 577
-    ExplicitWidth = 577
+    ExplicitLeft = 1
+    ExplicitTop = 543
+    ExplicitWidth = 813
   end
   object Panel2: TPanel
     Left = 0
     Top = 0
-    Width = 615
+    Width = 764
     Height = 73
     Align = alTop
     Caption = 'Vendas On-line'
@@ -199,12 +56,155 @@ object ViewVendasOnLine: TViewVendasOnLine
     Font.Name = 'Segoe UI'
     Font.Style = [fsBold]
     ParentFont = False
+    TabOrder = 1
+    ExplicitWidth = 615
+  end
+  object Panel1: TPanel
+    Left = 0
+    Top = 73
+    Width = 764
+    Height = 520
+    Align = alTop
     TabOrder = 2
-    ExplicitWidth = 577
+    ExplicitWidth = 1153
+    object dbgVendas: TDBGrid
+      Left = 1
+      Top = 1
+      Width = 762
+      Height = 522
+      Align = alTop
+      DataSource = dtsVendas
+      Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgRowSelect, dgConfirmDelete, dgCancelOnExit, dgTitleClick, dgTitleHotTrack]
+      TabOrder = 0
+      TitleFont.Charset = DEFAULT_CHARSET
+      TitleFont.Color = clWindowText
+      TitleFont.Height = -12
+      TitleFont.Name = 'Segoe UI'
+      TitleFont.Style = []
+      Columns = <
+        item
+          Alignment = taCenter
+          Expanded = False
+          FieldName = 'ID_VENDA'
+          Title.Caption = 'Id Venda'
+          Title.Font.Charset = DEFAULT_CHARSET
+          Title.Font.Color = clWindowText
+          Title.Font.Height = -12
+          Title.Font.Name = 'Segoe UI'
+          Title.Font.Style = [fsBold]
+          Width = 59
+          Visible = True
+        end
+        item
+          Alignment = taCenter
+          Expanded = False
+          FieldName = 'DATAVENDA'
+          Title.Caption = 'Data Venda'
+          Title.Font.Charset = DEFAULT_CHARSET
+          Title.Font.Color = clWindowText
+          Title.Font.Height = -12
+          Title.Font.Name = 'Segoe UI'
+          Title.Font.Style = [fsBold]
+          Width = 79
+          Visible = True
+        end
+        item
+          Alignment = taCenter
+          Expanded = False
+          FieldName = 'HORAVENDA'
+          Title.Caption = 'Hora Venda'
+          Title.Font.Charset = DEFAULT_CHARSET
+          Title.Font.Color = clWindowText
+          Title.Font.Height = -12
+          Title.Font.Name = 'Segoe UI'
+          Title.Font.Style = [fsBold]
+          Width = 79
+          Visible = True
+        end
+        item
+          Alignment = taCenter
+          Expanded = False
+          FieldName = 'ID_BOMBA'
+          Title.Caption = 'Id Bomba'
+          Title.Font.Charset = DEFAULT_CHARSET
+          Title.Font.Color = clWindowText
+          Title.Font.Height = -12
+          Title.Font.Name = 'Segoe UI'
+          Title.Font.Style = [fsBold]
+          Width = 58
+          Visible = True
+        end
+        item
+          Alignment = taCenter
+          Expanded = False
+          FieldName = 'DESCRICAO'
+          Title.Caption = 'Produto'
+          Title.Font.Charset = DEFAULT_CHARSET
+          Title.Font.Color = clWindowText
+          Title.Font.Height = -12
+          Title.Font.Name = 'Segoe UI'
+          Title.Font.Style = [fsBold]
+          Width = 121
+          Visible = True
+        end
+        item
+          Alignment = taCenter
+          Expanded = False
+          FieldName = 'QTD'
+          Title.Caption = 'Quantidade'
+          Title.Font.Charset = DEFAULT_CHARSET
+          Title.Font.Color = clWindowText
+          Title.Font.Height = -12
+          Title.Font.Name = 'Segoe UI'
+          Title.Font.Style = [fsBold]
+          Width = 67
+          Visible = True
+        end
+        item
+          Alignment = taCenter
+          Expanded = False
+          FieldName = 'PRECOVENDA'
+          Title.Caption = 'R$ Venda'
+          Title.Font.Charset = DEFAULT_CHARSET
+          Title.Font.Color = clWindowText
+          Title.Font.Height = -12
+          Title.Font.Name = 'Segoe UI'
+          Title.Font.Style = [fsBold]
+          Width = 57
+          Visible = True
+        end
+        item
+          Alignment = taCenter
+          Expanded = False
+          FieldName = 'PERCENTUALIMPOSTO'
+          Title.Caption = '% Imposto'
+          Title.Font.Charset = DEFAULT_CHARSET
+          Title.Font.Color = clWindowText
+          Title.Font.Height = -12
+          Title.Font.Name = 'Segoe UI'
+          Title.Font.Style = [fsBold]
+          Width = 65
+          Visible = True
+        end
+        item
+          Alignment = taCenter
+          Expanded = False
+          FieldName = 'TOTALVENDA'
+          Title.Caption = 'R$ Total Venda'
+          Title.Font.Charset = DEFAULT_CHARSET
+          Title.Font.Color = clWindowText
+          Title.Font.Height = -12
+          Title.Font.Name = 'Segoe UI'
+          Title.Font.Style = [fsBold]
+          Width = 92
+          Visible = True
+        end>
+    end
   end
   object dtsVendas: TDataSource
-    Left = 384
-    Top = 40
+    OnDataChange = dtsVendasDataChange
+    Left = 232
+    Top = 24
   end
   object tmrAtualizavendas: TTimer
     Interval = 10000

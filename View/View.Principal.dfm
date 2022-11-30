@@ -593,7 +593,13 @@ object ViewPrincipal: TViewPrincipal
     object Acoes1: TMenuItem
       Caption = 'A'#231#245'es'
       object SimuladordeVendas1: TMenuItem
-        Caption = 'Simulador de Vendas'
+        Action = actSimuladorVendas
+      end
+      object N4: TMenuItem
+        Caption = '-'
+      end
+      object VendasOnline1: TMenuItem
+        Action = actVendasOnLine
       end
     end
     object Relatrios1: TMenuItem
@@ -651,6 +657,11 @@ object ViewPrincipal: TViewPrincipal
       Category = 'Configura'#231'oes'
       Caption = 'Sobre'
       OnExecute = actSobreExecute
+    end
+    object actVendasOnLine: TAction
+      Category = 'Acoes'
+      Caption = 'Vendas On-line'
+      OnExecute = actVendasOnLineExecute
     end
   end
 end

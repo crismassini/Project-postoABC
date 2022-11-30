@@ -15,12 +15,13 @@ type
   public
     MontaVenda: TMontaVenda;
     procedure Execute; override;
+    function SimuladorVendasAtivo: Boolean;
     constructor Create(AConexao: TFDConnection);
     destructor Destroy; override;
 end;
 
 const
-  _TEMPOEXECUCAO = 10000;
+  _TEMPOEXECUCAO = 60000;  //a cada 1 minutos, um abastecimento...
 
 implementation
 
@@ -40,15 +41,17 @@ begin
 end;
 
 procedure TSimuladorVendas.Execute;
-var
-  i: Integer;
 begin
   inherited;
-  i := 0;
   repeat
     SimulaVenda;
     Sleep(_TEMPOEXECUCAO);
   until 1 = 2;
+end;
+
+function TSimuladorVendas.SimuladorVendasAtivo: Boolean;
+begin
+  Result := not Self.Terminated;
 end;
 
 procedure TSimuladorVendas.SimulaVenda;

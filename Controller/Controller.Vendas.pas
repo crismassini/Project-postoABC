@@ -49,15 +49,21 @@ begin
   QryVendas.Close;
   QryVendas.SQL.Clear;
   QryVendas.SQL.Add('SELECT ');
-  QryVendas.SQL.Add('  ID_VENDA, ');
-  QryVendas.SQL.Add('  ID_BOMBA, ');
-  QryVendas.SQL.Add('  QTD, ');
-  QryVendas.SQL.Add('  PRECOVENDA, ');
-  QryVendas.SQL.Add('  PERCENTUALIMPOSTO, ');
-  QryVendas.SQL.Add('  TOTALVENDA, ');
-  QryVendas.SQL.Add('  DATAVENDA, ');
-  QryVendas.SQL.Add('  HORAVENDA ');
-  QryVendas.SQL.Add('FROM VENDAS ');
+  QryVendas.SQL.Add('  V.ID_VENDA, ');
+  QryVendas.SQL.Add('  V.ID_BOMBA, ');
+  QryVendas.SQL.Add('  V.QTD, ');
+  QryVendas.SQL.Add('  V.PRECOVENDA, ');
+  QryVendas.SQL.Add('  V.PERCENTUALIMPOSTO, ');
+  QryVendas.SQL.Add('  V.TOTALVENDA, ');
+  QryVendas.SQL.Add('  V.DATAVENDA, ');
+  QryVendas.SQL.Add('  V.HORAVENDA, ');
+  QryVendas.SQL.Add('  P.DESCRICAO ');
+  QryVendas.SQL.Add('FROM VENDAS V');
+  QryVendas.SQL.Add('INNER JOIN CAD_BOMBAS B ON B.ID_BOMBA = V.ID_BOMBA');
+  QryVendas.SQL.Add('INNER JOIN CAD_PRODUTO P ON P.ID_PRODUTO = B.ID_PRODUTO');
+  QryVendas.SQL.Add('WHERE V.DATAVENDA = CURRENT_DATE');
+  QryVendas.SQL.Add('ORDER BY V.ID_VENDA DESC');
+
   QryVendas.Sql.SaveToFile(DiretorioPadraoLogs + 'QryVendas.sql');
   {$ENDREGION}
   QryVendas.Open;
