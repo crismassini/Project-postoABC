@@ -1,0 +1,35 @@
+unit Controller.Conexao;
+
+interface
+
+uses
+  FireDAC.Comp.Client, FireDAC.Stan.Intf;
+
+type
+  TConexao = class
+    private
+    FServidor: string;
+    FMsgErro: string;
+    FSenha: string;
+    FDatabase: string;
+    FUsuario: string;
+    FPorta: integer;
+    FConexao: TFDConnection;
+    public
+      constructor Create(AConexao: TFDConnection);
+      destructor Destroy; override;
+      property Conexao: TFDConnection read FConexao write FConexao;
+      property Servidor: string read FServidor write FServidor;
+      property Database: string read FDatabase write FDatabase;
+      property Porta: integer read FPorta write FPorta;
+      property Usuario: string read FUsuario write FUsuario;
+      property Senha: string read FSenha write FSenha;
+      property MsgErro: string read FMsgErro write FMsgErro;
+  end;
+
+implementation
+
+{ TConexao }
+
+
+end.

@@ -1,0 +1,7 @@
+unit Controller.Thread.SimuladorVendas;
+
+interface
+
+implementation
+
+end.

@@ -1,0 +1,77 @@
+unit Controller.Vendas;
+
+interface
+
+uses
+  FireDAC.Comp.Client;
+
+type
+  TVendas = class
+  private
+    FConexao: TFDConnection;
+    QryVendas: TFDQuery;
+    FDataVenda: TDateTime;
+    FPrecoVenda: Double;
+    FQtd: Double;
+    FId_Bomba: Integer;
+    FId_Venda: Integer;
+    FHoraVenda: TDateTime;
+    FTotalVenda: Double;
+    FPercentualImposto: Double;
+  public
+    function CarregarVendas: TFDQuery;
+
+    constructor Create(AConexao: TFDConnection);
+    destructor Destroy; override;
+    property Id_Venda: Integer read FId_Venda write FId_Venda;
+    property Id_Bomba: Integer read FId_Bomba write FId_Bomba;
+    property Qtd: Double read FQtd write FQtd;
+    property PrecoVenda: Double read FPrecoVenda write FPrecoVenda;
+    property PercentualImposto: Double read FPercentualImposto write FPercentualImposto;
+    property TotalVenda: Double read FTotalVenda write FTotalVenda;
+    property DataVenda: TDateTime read FDataVenda write FDataVenda;
+    property HoraVenda: TDateTime read FHoraVenda write FHoraVenda;
+
+  end;
+
+implementation
+
+uses
+  uUtil;
+{ TVenda }
+
+function TVendas.CarregarVendas: TFDQuery;
+begin
+  QryVendas.Connection := FConexao;
+  {$REGION 'SELECT CAD_USUARIOS'}
+  QryVendas.Close;
+  QryVendas.SQL.Clear;
+  QryVendas.SQL.Add('SELECT ');
+  QryVendas.SQL.Add('  ID_VENDA, ');
+  QryVendas.SQL.Add('  ID_BOMBA, ');
+  QryVendas.SQL.Add('  QTD, ');
+  QryVendas.SQL.Add('  PRECOVENDA, ');
+  QryVendas.SQL.Add('  PERCENTUALIMPOSTO, ');
+  QryVendas.SQL.Add('  TOTALVENDA, ');
+  QryVendas.SQL.Add('  DATAVENDA, ');
+  QryVendas.SQL.Add('  HORAVENDA ');
+  QryVendas.SQL.Add('FROM VENDAS ');
+  QryVendas.Sql.SaveToFile(DiretorioPadraoLogs + 'QryVendas.sql');
+  {$ENDREGION}
+  QryVendas.Open;
+
+  Result := QryVendas;
+end;
+
+constructor TVendas.Create(AConexao: TFDConnection);
+begin
+  FConexao := AConexao;
+  QryVendas := TFDQuery.Create(nil);
+end;
+
+destructor TVendas.Destroy;
+begin
+  QryVendas.Free;
+  inherited;
+end;
+end.

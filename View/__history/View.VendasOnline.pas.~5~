@@ -1,0 +1,35 @@
+unit View.VendasOnline;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Data.DB, Vcl.Grids, Vcl.DBGrids,
+  Vcl.ExtCtrls, Vcl.ComCtrls, Controller.DtmConexao;
+
+type
+  TForm1 = class(TForm)
+    dbgVendas: TDBGrid;
+    dtsVendas: TDataSource;
+    Panel1: TPanel;
+    StatusBar1: TStatusBar;
+    procedure FormCreate(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  Form1: TForm1;
+
+implementation
+
+{$R *.dfm}
+
+procedure TForm1.FormCreate(Sender: TObject);
+begin
+  ControllerDtmConexao.Usuario := T.Create(ControllerDtmConexao.FDConnection);
+end;
+
+end.

@@ -1,0 +1,8 @@
+SELECT 
+    ID_USUARIO, 
+    NOME, 
+    SENHA, 
+    CONFIRMASENHA, 
+    EMAIL 
+FROM CAD_USUARIOS 
+  WHERE NOME like :p_ATexto

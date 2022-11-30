@@ -1,0 +1,132 @@
+unit Controller.Classe.Usuario;
+
+interface
+
+uses
+  FireDAC.Comp.Client, Vcl.Dialogs, Vcl.Controls, System.SysUtils, FireDAC.DApt,
+  Vcl.Forms;
+
+type
+  TUsuario = class
+  private
+    FSenha: string;
+    FConfirmaSenha: string;
+    FNome: string;
+    FEmail: string;
+    FId_Usuario: integer;
+    FConexao: TFDConnection;
+    QryConsulta: TFDQuery;
+  public
+    constructor Create(AConexao: TFDConnection) ;
+    destructor Destroy; override;
+    function Inserir_alterar(ATipoOperacao: string; out Erro: string): Boolean;
+    procedure Deletar(AId_Usuario: integer);
+    function Consultar(ATexto: string): TFDQuery;
+    property Id_Usuario: integer read FId_Usuario write FId_Usuario;
+    property Nome: string read FNome write FNome;
+    property Senha: string read FSenha write FSenha;
+    property ConfirmaSenha: string read FConfirmaSenha write FConfirmaSenha;
+    property Email: string read FEmail write FEmail;
+end;
+
+implementation
+
+uses
+  uUtil;
+
+{ TUsuario }
+
+constructor TUsuario.Create(AConexao: TFDConnection);
+begin
+  FConexao := AConexao;
+  QryConsulta := TFDQuery.Create(nil);
+end;
+
+destructor TUsuario.Destroy;
+begin
+  QryConsulta.Free;
+  inherited;
+end;
+
+procedure TUsuario.Deletar(AId_Usuario: integer);
+begin
+  if MessageDlg('Você tem certeza que deseja excluir o registro?', mtConfirmation,[mbyes,mbno],0) = mrYes then
+  begin
+    FConexao.Connected := False;
+    FConexao.Connected := True;
+
+    FConexao.ExecSQL('DELETE FROM CAD_USUARIOS WHERE ID_USUARIO = :ID_USUARIO', [AId_Usuario]);
+  end;
+end;
+
+function TUsuario.Consultar(ATexto: string): TFDQuery;
+begin
+  try
+    {$REGION 'SELECT CAD_USUARIOS'}
+    QryConsulta.Connection := FConexao;
+    QryConsulta.SQL.Clear;
+    QryConsulta.SQL.Add('SELECT ');
+    QryConsulta.SQL.Add('    ID_USUARIO, ');
+    QryConsulta.SQL.Add('    NOME, ');
+    QryConsulta.SQL.Add('    SENHA, ');
+    QryConsulta.SQL.Add('    CONFIRMASENHA, ');
+    QryConsulta.SQL.Add('    EMAIL ');
+    QryConsulta.SQL.Add('FROM CAD_USUARIOS ');
+    QryConsulta.SQL.Add('  WHERE NOME like :p_ATexto');
+    QryConsulta.ParamByName('p_ATexto').AsString := '%' + ATexto + '%';
+    QryConsulta.Sql.SaveToFile(DiretorioPadraoLogs + 'QryConsulta.sql');
+    {$ENDREGION}
+    QryConsulta.Open;
+  finally
+    Result := QryConsulta;
+  end;
+end;
+
+function TUsuario.Inserir_alterar(ATipoOperacao: string;
+  out Erro: string): Boolean;
+var
+  QryInserir: TFDQuery;
+begin
+  QryInserir := TFDQuery.Create(nil);
+  try
+    QryInserir.Connection := FConexao;
+    try
+      QryInserir.Close;
+      QryInserir.SQL.Clear;
+
+      if ATipoOperacao = 'INSERIR' then
+      begin
+        QryInserir.SQL.Add('INSERT INTO CAD_USUARIOS ( ');
+        QryInserir.SQL.Add('NOME, SENHA, CONFIRMASENHA, EMAIL ) ');
+        QryInserir.SQL.Add('VALUES (');
+        QryInserir.SQL.Add(':pNOME, :pSENHA, :pCONFIRMASENHA, :pEMAIL) ');
+//        QryInserir.ParamByName('pID_USUARIO').AsInteger := //proxcod;
+      end
+      else //update
+      begin
+        QryInserir.SQL.Add('UPDATE CAD_USUARIOS SET ');
+        QryInserir.SQL.Add('NOME = :pNOME, ');
+        QryInserir.SQL.Add('SENHA = :pSENHA, ');
+        QryInserir.SQL.Add('EMAIL = :pEMAIL ');
+        QryInserir.SQL.Add('WHERE ID_USUARIO = pID_USUARIO ');
+
+        QryInserir.ParamByName('pID_USUARIO').AsInteger := FId_Usuario;
+        QryInserir.ParamByName('pNOME').AsString := FNome;
+        QryInserir.ParamByName('pSENHA').AsString := FSenha;
+        QryInserir.ParamByName('pEMAIL').AsString := FEmail;
+      end;
+      QryInserir.ExecSQL;
+
+      Result := True;
+    except on E: Exception do
+      begin
+        Erro := E.message;
+        Result := False;
+      end;
+    end;
+  finally
+    QryInserir.Free;
+  end;
+end;
+
+end.

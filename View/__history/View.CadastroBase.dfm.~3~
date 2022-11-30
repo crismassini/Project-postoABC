@@ -1,0 +1,27 @@
+object ViewCadastroBase: TViewCadastroBase
+  Left = 0
+  Top = 0
+  Caption = 'ViewCadastroBase'
+  ClientHeight = 433
+  ClientWidth = 622
+  Color = clBtnFace
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -12
+  Font.Name = 'Segoe UI'
+  Font.Style = []
+  PixelsPerInch = 96
+  TextHeight = 15
+  object Panel1: TPanel
+    Left = 0
+    Top = 0
+    Width = 622
+    Height = 41
+    Align = alTop
+    Caption = 'CadastroBase'
+    TabOrder = 0
+    ExplicitLeft = 232
+    ExplicitTop = 224
+    ExplicitWidth = 185
+  end
+end

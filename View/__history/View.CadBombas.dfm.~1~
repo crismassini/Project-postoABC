@@ -1,0 +1,8 @@
+inherited ViewCadBombas: TViewCadBombas
+  Caption = 'Cadastro de Bombas'
+  PixelsPerInch = 96
+  TextHeight = 15
+  inherited DBNavigator1: TDBNavigator
+    Hints.Strings = ()
+  end
+end

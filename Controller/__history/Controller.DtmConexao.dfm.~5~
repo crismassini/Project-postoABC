@@ -1,0 +1,18 @@
+object ControllerDtmConexao: TControllerDtmConexao
+  OnCreate = DataModuleCreate
+  Height = 251
+  Width = 486
+  PixelsPerInch = 120
+  object FDConnection: TFDConnection
+    Params.Strings = (
+      'DriverID=FB'
+      'Database=C:\CrisProject\Fortes\Database\RETAG_BASE.FDB'
+      'Password=masterkey'
+      'Port=3050'
+      'Server=localhost'
+      'User_Name=SYSDBA')
+    LoginPrompt = False
+    Left = 56
+    Top = 64
+  end
+end

@@ -1,0 +1,135 @@
+unit Controller.Classe.Bomba;
+
+interface
+
+uses
+  FireDAC.Comp.Client, Vcl.Dialogs, Vcl.Controls, System.SysUtils, FireDAC.DApt,
+  Vcl.Forms;
+
+type
+  TBomba = class
+  private
+    FConexao: TFDConnection;
+    QryConsulta: TFDQuery;
+    FId_Produto: Integer;
+    FId_Bomba: Integer;
+    FDescricao: string;
+  public
+    constructor Create(AConexao: TFDConnection) ;
+    destructor Destroy; override;
+    function Inserir_alterar(ATipoOperacao: string; out Erro: string): Boolean;
+    procedure Deletar(AId_Bomba: integer);
+    function Consultar(ATexto: string): TFDQuery;
+    property Id_Bomba: Integer read FId_Bomba write FId_Bomba;
+    property Descricao: string read FDescricao write FDescricao;
+    property Id_Produto: Integer read FId_Produto write FId_Produto;
+end;
+
+implementation
+
+uses
+  uUtil;
+
+{ TUsuario }
+
+constructor TBomba.Create(AConexao: TFDConnection);
+begin
+  FConexao := AConexao;
+  QryConsulta := TFDQuery.Create(nil);
+end;
+
+destructor TBomba.Destroy;
+begin
+  QryConsulta.Free;
+  inherited;
+end;
+
+procedure TBomba.Deletar(AId_Bomba: integer);
+begin
+  if MessageDlg('Você tem certeza que deseja excluir o registro?', mtConfirmation,[mbyes,mbno],0) = mrYes then
+  begin
+    FConexao.Connected := False;
+    FConexao.Connected := True;
+
+    FConexao.ExecSQL('DELETE FROM CAD_BOMBAS WHERE ID_USUARIO = :ID_BOMBA', [AId_Bomba]);
+  end;
+end;
+
+function TBomba.Consultar(ATexto: string): TFDQuery;
+begin
+  try
+    {$REGION 'SELECT CAD_BOMBAS'}
+    QryConsulta.Connection := FConexao;
+    QryConsulta.SQL.Clear;
+    QryConsulta.SQL.Add('SELECT ');
+    QryConsulta.SQL.Add('    ID_BOMBA, ');
+    QryConsulta.SQL.Add('    DESCRICAO, ');
+    QryConsulta.SQL.Add('    ID_PRODUTO ');
+    QryConsulta.SQL.Add('FROM CAD_BOMBAS ');
+    QryConsulta.SQL.Add('  WHERE DESCRICAO like :p_ATexto');
+    QryConsulta.ParamByName('p_ATexto').AsString := '%' + ATexto + '%';
+    QryConsulta.Sql.SaveToFile(DiretorioPadraoLogs + 'QryConsultaBombas.sql');
+    {$ENDREGION}
+    QryConsulta.Open;
+  finally
+    Result := QryConsulta;
+  end;
+end;
+
+function TBomba.Inserir_alterar(ATipoOperacao: string;
+  out Erro: string): Boolean;
+var
+  QryInserir: TFDQuery;
+begin
+  QryInserir := TFDQuery.Create(nil);
+  try
+    QryInserir.Connection := FConexao;
+    try
+      QryInserir.Close;
+      QryInserir.SQL.Clear;
+
+      if ATipoOperacao = 'INSERIR' then
+      begin
+        {$REGION 'INSERT CAD_BOMBAS'}
+        QryInserir.SQL.Add('INSERT INTO CAD_BOMBAS ( ');
+        QryInserir.SQL.Add('ID_BOMBA, DESCRICAO, ID_PRODUTO ) ');
+        QryInserir.SQL.Add('VALUES (');
+        QryInserir.SQL.Add(':pID_BOMBA, :pDESCRICAO, :pID_PRODUTO ) ');
+
+        QryInserir.ParamByName('pID_BOMBA').AsInteger := ProxCod('CAD_BOMBAS', 'ID_BOMBA');
+        QryInserir.ParamByName('pID_BOMBA').AsInteger := FId_Bomba;
+        QryInserir.ParamByName('pDESCRICAO').AsString := FDescricao;
+        QryInserir.ParamByName('pID_PRODUTO').AsInteger := FId_Produto;
+        {$ENDREGION}
+      end
+      else //update
+      begin
+        {$REGION 'UPDATE CAD_USUARIOS'}
+        QryInserir.SQL.Add('UPDATE CAD_BOMBA SET ');
+        QryInserir.SQL.Add('NOME = :pID_BOMBA, ');
+        QryInserir.SQL.Add('SENHA = :pDESCRICAO, ');
+        QryInserir.SQL.Add('EMAIL = :pID_PRODUTO ');
+        QryInserir.SQL.Add('WHERE ID_BOMBA = pID_BOMBA ');
+
+        QryInserir.ParamByName('pID_BOMBA').AsInteger := FId_Bomba;
+        QryInserir.ParamByName('pDESCRICAO').AsString := FDescricao;
+        QryInserir.ParamByName('pID_PRODUTO').AsInteger := FId_Produto;
+        {$ENDREGION }
+      end;
+      QryInserir.Sql.SaveToFile(DiretorioPadraoLogs + 'QryInserirBomba.sql');
+      QryInserir.ExecSQL;
+
+      Result := True;
+    except on E: Exception do
+      begin
+        Erro := E.message;
+        Result := False;
+      end;
+    end;
+  finally
+    QryInserir.Free;
+  end;
+end;
+
+
+end.

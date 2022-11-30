@@ -1,0 +1,32 @@
+unit Controller.Thread.SimuladorVendas;
+
+interface
+
+uses
+  System.Classes;
+
+type
+  TMinhaThread = class(TThread)
+  private
+  protected
+    procedure Execute; override;
+  public
+    constructor Create();
+end;
+
+implementation
+
+constructor TMinhaThread.Create();
+begin
+  inherited Create(True);
+  FreeOnTerminate := True;
+  Priority := TpLower;
+end;
+
+procedure TMinhaThread.Execute;
+begin
+  inherited;
+  {Processo a ser executado}
+end;
+
+end.

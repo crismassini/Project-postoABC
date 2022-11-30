@@ -1,0 +1,148 @@
+unit uUtil;
+
+interface
+
+uses
+  Winapi.Windows, Vcl.Forms, System.SysUtils, FireDAC.Comp.Client, Data.DB,
+  System.Win.ComObj;
+
+function VersaoExe: String;
+function DiretorioPadrao: String;
+function DiretorioPadraoLogs: String;
+function ProxCod(ATabela, ACampo: string): Integer;
+procedure GerarXLS(DSPadrao: TDataSet);
+
+implementation
+
+uses
+  Controller.DtmConexao;
+
+Function VersaoExe: String;
+type
+   PFFI = ^vs_FixedFileInfo;
+var
+   F       : PFFI;
+   Handle  : Dword;
+   Len     : Longint;
+   Data    : Pchar;
+   Buffer  : Pointer;
+   Tamanho : Dword;
+   Parquivo: Pchar;
+   Arquivo : String;
+begin
+   Arquivo  := Application.ExeName;
+   Parquivo := StrAlloc(Length(Arquivo) + 1);
+   StrPcopy(Parquivo, Arquivo);
+   Len := GetFileVersionInfoSize(Parquivo, Handle);
+   Result := '';
+   if Len > 0 then
+   begin
+      Data:=StrAlloc(Len+1);
+      if GetFileVersionInfo(Parquivo,Handle,Len,Data) then
+      begin
+         VerQueryValue(Data, '',Buffer,Tamanho);
+         F := PFFI(Buffer);
+         Result := Format('%d.%d.%d.%d',
+                          [HiWord(F^.dwFileVersionMs),
+                           LoWord(F^.dwFileVersionMs),
+                           HiWord(F^.dwFileVersionLs),
+                           Loword(F^.dwFileVersionLs)]
+                         );
+      end;
+      StrDispose(Data);
+   end;
+   StrDispose(Parquivo);
+end;
+
+function DiretorioPadrao: String;
+begin
+  Result := ExtractFilePath(Application.ExeName);
+end;
+
+function DiretorioPadraoLogs: String;
+var
+  Diretorio: string;
+begin
+  Diretorio := ExtractFilePath(Application.ExeName) + 'logs\';
+
+  if not DirectoryExists(Diretorio) then
+    ForceDirectories(Diretorio);
+
+  Result := Diretorio;
+end;
+
+function ProxCod(ATabela, ACampo: string): Integer;
+var
+  QryProxCod: TFDQuery;
+begin
+  Result := 1;
+  QryProxCod := TFDQuery.Create(nil);
+  try
+    QryProxCod.Connection := ControllerDtmConexao.FDConnection;
+    QryProxCod.SQL.Clear;
+    QryProxCod.SQL.Add('SELECT MAX (' + ACampo + ') AS CODIGO FROM ' + ATabela);
+    QryProxCod.Open;
+
+  finally
+    QryProxCod.Free;
+
+  end;
+end;
+
+procedure GerarXLS(DSPadrao: TDataSet);
+Var
+  Lin, Col   : Integer;
+  xExcel     : Variant;
+  Conteudo : String;
+begin
+
+  Try
+   if DSPadrao.RecordCount < 1 then
+   begin
+     Application.MessageBox('Nenhum registro a ser exportado','Atenção',MB_OK);
+     Exit;
+   end;
+   Try
+     xExcel:= CreateoleObject('Excel.Application');
+     xExcel.WorkBooks.add(1);
+     xExcel.caption := 'Titulo da Planilha ';
+     xExcel.visible := False;
+
+     DSPadrao.DisableControls;
+     DSPadrao.First;
+
+     for Lin := 0 to DSPadrao.RecordCount - 1 do
+     begin
+       for Col := 1 to DSPadrao.FieldCount do
+       begin
+         Conteudo := DSPadrao.Fields[Col - 1].AsString;
+         xExcel.cells[Lin + 2,Col]:= Conteudo;
+       end;
+
+      DSPadrao.Next;
+      Application.ProcessMessages;
+     end;
+     for Col := 1 to DSPadrao.FieldCount do
+     begin
+       Conteudo := DSPadrao.Fields[Lin - 1].Name;
+       xExcel.cells[1,Col] := Conteudo;
+       xExcel.Range['A1','Z1'].font.bold := true; // Negrito
+       xExcel.Range['A1','Z1'].Interior.Color := $00D6D6D6; // Cor da Célula
+       xExcel.Range['A1','Z1'].RowHeight := 25; //Altura da Célula
+     end;
+     xExcel.visible := True;
+     xExcel.columns.Autofit;  //Alinhar automaticamete o tamanho da coluna
+   finally
+     DSPadrao.EnableControls;
+//     Enabled := True;
+   end;
+  Except
+    on e : Exception do
+        raise Exception.Create('Erro ao exportar planilha ' +#13+
+                               '================'+#13+#13+
+                               'Menssagem : ' + E.Message +#13+
+                               'Classe : '    + E.ClassName);
+  end;
+end;
+
+end.

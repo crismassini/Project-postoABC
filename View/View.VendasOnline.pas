@@ -1,0 +1,53 @@
+unit View.VendasOnline;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Data.DB, Vcl.Grids, Vcl.DBGrids,
+  Vcl.ExtCtrls, Vcl.ComCtrls;
+
+type
+  TViewVendasOnLine = class(TForm)
+    dbgVendas: TDBGrid;
+    dtsVendas: TDataSource;
+    Panel1: TPanel;
+    StatusBar1: TStatusBar;
+    Panel2: TPanel;
+    tmrAtualizavendas: TTimer;
+    procedure FormCreate(Sender: TObject);
+    procedure tmrAtualizavendasTimer(Sender: TObject);
+    procedure FormShow(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  ViewVendasOnLine: TViewVendasOnLine;
+
+implementation
+
+uses
+  Controller.DtmConexao, Controller.Vendas;
+
+
+{$R *.dfm}
+
+procedure TViewVendasOnLine.FormCreate(Sender: TObject);
+begin
+  ControllerDtmConexao.Vendas := TVendas.Create(ControllerDtmConexao.FDConnection);
+end;
+
+procedure TViewVendasOnLine.FormShow(Sender: TObject);
+begin
+  dtsVendas.DataSet := ControllerDtmConexao.Vendas.CarregarVendas;
+end;
+
+procedure TViewVendasOnLine.tmrAtualizavendasTimer(Sender: TObject);
+begin
+  dtsVendas.DataSet.Refresh;
+end;
+
+end.
