@@ -18,7 +18,7 @@ O sistema possui as seguintes telas:
 
 * Simulador de Vendas - É uma thread que popula a tabela **VENDAS**, simulando o abastecimento nas bombas do posto - **FUNCIONAL COM AJUSTES DE VASAMENTO DE MEMORIA A SEREM FEITOS**
 
-* Cadastro de Usuários - cadastro de usuários do sistema - **FUNCIONAL**
-* Cadastro de Bombas - cadastro de bomba de combustivel para abastecimento - ** NÃO FUNCIONAL - TABELA OK, TELA A TERMINAR**
-* Cadastro de Produtos - cadastro para os combustíveis para venda - ** NÃO FUNCIONAL - TABELA OK, TELA A TERMINAR**
+* Cadastro de Usuários - Cadastro de usuários do sistema - **FUNCIONAL**
+* Cadastro de Bombas - Cadastro de bomba de combustivel para abastecimento - **NÃO FUNCIONAL - TABELA OK, TELA A TERMINAR**
+* Cadastro de Produtos - Cadastro para os combustíveis para venda - **NÃO FUNCIONAL - TABELA OK, TELA A TERMINAR**
 
