@@ -19,7 +19,8 @@ uses
   View.RelVendas in '..\View\View.RelVendas.pas' {ViewRelVendas},
   View.Sobre in '..\View\View.Sobre.pas' {ViewSobre},
   View.Fortes.RelVendas in '..\View\View.Fortes.RelVendas.pas' {ViewFortesRelVendas},
-  Controller.Thread.SimuladorVendas in '..\Controller\Controller.Thread.SimuladorVendas.pas';
+  Controller.Thread.SimuladorVendas in '..\Controller\Controller.Thread.SimuladorVendas.pas',
+  Model.Thread.SimuladorVendas in '..\Model\Model.Thread.SimuladorVendas.pas';
 
 {$R *.res}
 

@@ -15,6 +15,7 @@ object ViewPrincipal: TViewPrincipal
   Position = poDesktopCenter
   WindowState = wsMaximized
   OnCreate = FormCreate
+  OnShow = FormShow
   PixelsPerInch = 96
   TextHeight = 15
   object Image1: TImage
@@ -639,6 +640,7 @@ object ViewPrincipal: TViewPrincipal
     object actSimuladorVendas: TAction
       Category = 'Acoes'
       Caption = 'Simulador de Vendas'
+      OnExecute = actSimuladorVendasExecute
     end
     object actRelVendas: TAction
       Category = 'Relatorios'

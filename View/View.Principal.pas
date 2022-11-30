@@ -5,7 +5,8 @@ interface
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.Menus, Vcl.ComCtrls, Vcl.ExtCtrls,
-  Vcl.Imaging.pngimage, System.Actions, Vcl.ActnList;
+  Vcl.Imaging.pngimage, System.Actions, Vcl.ActnList, Controller.Thread.SimuladorVendas,
+  System.UITypes;
 
 type
   TViewPrincipal = class(TForm)
@@ -41,8 +42,13 @@ type
     procedure actCadProdutosExecute(Sender: TObject);
     procedure actSobreExecute(Sender: TObject);
     procedure actRelVendasExecute(Sender: TObject);
+    procedure FormShow(Sender: TObject);
+    procedure actSimuladorVendasExecute(Sender: TObject);
   private
     { Private declarations }
+    SimuladorVendas: TSimuladorVendas;
+    function SimuladorVendasLigado: Boolean;
+    procedure IniciaSimuladorVendas;
   public
     { Public declarations }
   end;
@@ -53,13 +59,33 @@ var
 implementation
 
 uses
-  uUtil, View.CadUsuario, View.CadBombas, View.CadProdutos, View.Sobre, View.RelVendas;
+  uUtil, View.CadUsuario, View.CadBombas, View.CadProdutos, View.Sobre, View.RelVendas,
+  Controller.DtmConexao;
 
 {$R *.dfm}
 
 procedure TViewPrincipal.FormCreate(Sender: TObject);
 begin
   ViewPrincipal.Caption := ViewPrincipal.Caption + ' | Versão: ' + VersaoExe;
+end;
+
+procedure TViewPrincipal.FormShow(Sender: TObject);
+begin
+  IniciaSimuladorVendas;
+end;
+
+procedure TViewPrincipal.IniciaSimuladorVendas;
+begin
+  if SimuladorVendas = nil then
+  begin
+    SimuladorVendas := TSimuladorVendas.Create(ControllerDtmConexao.FDConnection);
+    SimuladorVendas.Execute;
+  end;
+end;
+
+function TViewPrincipal.SimuladorVendasLigado: Boolean;
+begin
+  Result := SimuladorVendas = nil;
 end;
 
 procedure TViewPrincipal.TimerTimer(Sender: TObject);
@@ -117,6 +143,20 @@ begin
     finally
       FreeAndNil(ViewRelVendas);
     end;
+  end;
+end;
+
+procedure TViewPrincipal.actSimuladorVendasExecute(Sender: TObject);
+begin
+  if SimuladorVendasLigado then
+  begin
+    if MessageDlg('Deseja ENCERRAR o simulador de vendas?', mtConfirmation,[mbyes,mbno],0) = mrYes then
+      FreeAndNil(SimuladorVendas);
+  end
+  else
+  begin
+    if MessageDlg('Deseja INICIAR o simulador de vendas?', mtConfirmation,[mbyes,mbno],0) = mrYes then
+      IniciaSimuladorVendas;
   end;
 end;
 

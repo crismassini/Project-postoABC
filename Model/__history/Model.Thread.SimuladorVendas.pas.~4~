@@ -1,0 +1,75 @@
+unit Model.Thread.SimuladorVendas;
+
+interface
+
+type
+  TMontaVenda = class
+  private
+    FDATAVENDA: TDateTime;
+    FQTD: Double;
+    FID_BOMBA: Integer;
+    FHORAVENDA: TDateTime;
+    FPRECOVENDA: Double;
+    FTOTALVENDA: Double;
+    FPERCENTUALIMPOSTO: Double;
+    FID_VENDA: Integer;
+  published
+  procedure CriaVenda;
+  constructor Create;
+  destructor Destroy; override;
+  property ID_VENDA: Integer read FID_VENDA write FID_VENDA;
+  property ID_BOMBA: Integer read FID_BOMBA write FID_BOMBA;
+  property QTD: Double read FQTD write FQTD;
+  property PRECOVENDA: Double read FPRECOVENDA write FPRECOVENDA;
+  property PERCENTUALIMPOSTO: Double read FPERCENTUALIMPOSTO write FPERCENTUALIMPOSTO;
+  property TOTALVENDA: Double read FTOTALVENDA write FTOTALVENDA;
+  property DATAVENDA: TDateTime read FDATAVENDA write FDATAVENDA;
+  property HORAVENDA: TDateTime read FHORAVENDA write FHORAVENDA;
+
+
+  end;
+
+implementation
+
+uses
+  uUtil;
+
+{ TInsertVenda }
+
+constructor TMontaVenda.Create;
+begin
+
+end;
+
+procedure TMontaVenda.CriaVenda
+begin
+  FID_VENDA := ProxCod('VENDA', 'ID_VENDA');
+
+  if True then
+  begin
+    FID_BOMBA := 1;
+  end;
+
+  if (FID_BOMBA  = 1) or (FID_BOMBA  = 2) then //Bomba 1 e 2 são de Gasolina
+  begin
+    FQTD := (FID_BOMBA + Trunc(Now)) * 10 ;
+    FPRECOVENDA := 4;
+  end
+  else                                                               //Bomba 3 e 4 são de Oleo Diesel
+  begin
+    FQTD := (FID_BOMBA + Trunc(Now)) * 5;
+    FPRECOVENDA := 3;
+  end;
+  FPERCENTUALIMPOSTO := 0.13;
+  FTOTALVENDA := (FQTD * FPRECOVENDA) + ((FQTD * FPRECOVENDA)  * FPERCENTUALIMPOSTO);
+  FDATAVENDA := Now;
+  FHORAVENDA := Now;
+end;
+
+destructor TMontaVenda.Destroy;
+begin
+
+  inherited;
+end;
+
+end.

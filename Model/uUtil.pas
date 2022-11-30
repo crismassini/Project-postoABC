@@ -10,6 +10,7 @@ function VersaoExe: String;
 function DiretorioPadrao: String;
 function DiretorioPadraoLogs: String;
 function ProxCod(ATabela, ACampo: string): Integer;
+function EhNumeroPrimo(ANumero: Integer): Boolean;
 procedure GerarXLS(DataSet: TDataSet; Arq: string); overload;
 
 implementation
@@ -81,11 +82,12 @@ begin
     QryProxCod.Connection := ControllerDtmConexao.FDConnection;
     QryProxCod.SQL.Clear;
     QryProxCod.SQL.Add('SELECT MAX (' + ACampo + ') AS CODIGO FROM ' + ATabela);
+    QryProxCod.Sql.SaveToFile(DiretorioPadraoLogs + 'QryProxCod.sql');
     QryProxCod.Open;
 
+    Result := Result + QryProxCod.Fields[0].AsInteger;
   finally
     QryProxCod.Free;
-
   end;
 end;
 
@@ -111,5 +113,18 @@ begin
   ExcApp.WorkBooks[1].SaveAs(Arq);
 end;
 
+function EhNumeroPrimo(ANumero: Integer): Boolean;
+var x, y: LongInt;
+    h: Byte;
+begin
+  Result := False;
+  x := ANumero;
+  h := 0;
+  for y :=1 to x do
+      if (x mod y = 0) then
+         h := h + 1;
+  if (h = 2) then
+     Result := True;
+end;
 
 end.

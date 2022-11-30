@@ -1,8 +1,8 @@
 object ControllerDtmConexao: TControllerDtmConexao
   OnCreate = DataModuleCreate
   OnDestroy = DataModuleDestroy
-  Height = 251
-  Width = 486
+  Height = 192
+  Width = 194
   PixelsPerInch = 120
   object FDConnection: TFDConnection
     Params.Strings = (
