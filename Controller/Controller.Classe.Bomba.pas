@@ -4,7 +4,7 @@ interface
 
 uses
   FireDAC.Comp.Client, Vcl.Dialogs, Vcl.Controls, System.SysUtils, FireDAC.DApt,
-  Vcl.Forms;
+  Vcl.Forms, FireDAC.Stan.Param, System.UITypes;
 
 type
   TBomba = class
