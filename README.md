@@ -13,9 +13,12 @@ Projeto Fortes - Gerenciamento de Posto de Combustivel
 
 O sistema possui as seguintes telas:
 
-* Cadastro de Usuários - cadastro de usuários do sistema
-* Cadastro de Bombas - cadastro de bomba de conbustivel para abastecimento
-* Cadastro de Produtos - cadastro para os combustíveis para venda
-* Relatorio de Vendas - relatorio de vendas por periodo
-* Simulador de Vendas - É uma thread que popula a tabela **VENDAS**, simulando o abastecimento nas bombas do posto
+* Relatorio de Vendas - relatorio de vendas por periodo - **FUNCIONAL**
+* Vendas On-Line - Tela para acompanhar as vendas de combustivel em tempo real - **FUNCIONAL**
+
+* Simulador de Vendas - É uma thread que popula a tabela **VENDAS**, simulando o abastecimento nas bombas do posto - **FUNCIONAL COM AJUSTES DE VASAMENTO DE MEMORIA A SEREM FEITOS**
+
+* Cadastro de Usuários - cadastro de usuários do sistema - **FUNCIONAL**
+* Cadastro de Bombas - cadastro de bomba de combustivel para abastecimento - ** NÃO FUNCIONAL - TABELA OK, TELA A TERMINAR**
+* Cadastro de Produtos - cadastro para os combustíveis para venda - ** NÃO FUNCIONAL - TABELA OK, TELA A TERMINAR**
 
