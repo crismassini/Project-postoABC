@@ -2,8 +2,6 @@ inherited ViewCadUsuario: TViewCadUsuario
   Caption = 'ViewCadUsuario'
   ClientHeight = 562
   ClientWidth = 366
-  Position = poDesktopCenter
-  Visible = False
   OnClose = FormClose
   OnCreate = FormCreate
   OnShow = FormShow
@@ -162,7 +160,6 @@ inherited ViewCadUsuario: TViewCadUsuario
     Font.Style = [fsBold]
     ParentFont = False
     TabOrder = 5
-    OnClick = btnNovoClick
   end
   object btnEditar: TButton [6]
     Left = 115
