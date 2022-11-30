@@ -13,7 +13,7 @@ Projeto Fortes - Gerenciamento de Posto de Combustivel
 
 O sistema possui as seguintes telas:
 
-* Relatorio de Vendas - relatorio de vendas por periodo - **FUNCIONAL**
+* Relatório de Vendas - Relatório de Vendas por Período - **FUNCIONAL**
 * Vendas On-Line - Tela para acompanhar as vendas de combustivel em tempo real - **FUNCIONAL**
 
 * Simulador de Vendas - É uma thread que popula a tabela **VENDAS**, simulando o abastecimento nas bombas do posto - **FUNCIONAL COM AJUSTES DE VASAMENTO DE MEMORIA A SEREM FEITOS**
