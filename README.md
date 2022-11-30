@@ -9,7 +9,7 @@ Projeto Fortes - Gerenciamento de Posto de Combustivel
 
 # O Sistema
 
-A ideia é de um software para gerenciamento de um posto de combustivel.
+**OBJETIVO:** Software para gerenciamento de um posto de combustivel.
 
 O sistema possui as seguintes telas:
 
@@ -17,5 +17,5 @@ O sistema possui as seguintes telas:
 * Cadastro de Bombas - cadastro de bomba de conbustivel para abastecimento
 * Cadastro de Produtos - cadastro para os combustíveis para venda
 * Relatorio de Vendas - relatorio de vendas por periodo
-* Simulador de Vendas - É uma thread que popula a tabela *VENDAS*, simulando o abastecimento nas bombas do posto
+* Simulador de Vendas - É uma thread que popula a tabela **VENDAS**, simulando o abastecimento nas bombas do posto
 
